@@ -43,6 +43,13 @@ def newController():
     control = controller.newController()
     return control
 
+def newControllerTest(factor, Ctype):
+    """
+    Se crea una instancia del controlador
+    """
+    control = controller.newControllerTest(factor, Ctype)
+    return control
+
 control = newController()
 
 #Funciones de requerimientos
@@ -55,6 +62,10 @@ def loadData():
     return albums, artists, tracks
 
 
+def loadDataTest(factor, Ctype):
+    controlTest = newControllerTest(factor, Ctype)
+    albums, artists, tracks, tiempo, memoria = controller.loadDataTest(controlTest)
+    return albums, artists, tracks, tiempo, memoria
 
     
 
@@ -62,6 +73,8 @@ def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
     print("2- ")
+    print("...")
+    print("6- Pruebas LAB7")
 
 catalog = None
 
@@ -93,6 +106,25 @@ while True:
     elif int(inputs[0]) == 2:
         pass
 
+    
+    elif int(inputs[0]) == 6:
+        print("Cargando información de los archivos ....")
+        factor = float(input("Cual es el Factor de Carga?(Ejm. 0.20, 0.90, 2...) \n"))
+        Ctype = str(input("CHAINING o PROBING: \n"))
+        albums, artists, tracks, tiempo, memoria = loadDataTest(factor, Ctype)
+
+        # este apartado se encarga de informar al usuario cuantos
+        # elementos fueron cargados e incluye la función de imprimir
+        # la información de cada lista.
+
+        print("Para un map de tipo " + Ctype + " con factor de carga " + str(factor) + ": \n")
+        print("===================="*2)
+        print(f"Cantidad de datos cargados: {albums+artists+tracks} \n")
+        print("===================="*2)
+        print(f"Tiempo de carga: {tiempo:.3f} \n")
+        print("===================="*2)
+        print(f"Consumo de memoria: {memoria:.3f} \n")
+        print("===================="*2)
     else:
         sys.exit(0)
 sys.exit(0)

@@ -68,6 +68,30 @@ def newCatalog():
 
     return catalog
 
+
+def newCatalogTest(factor, Ctype):
+
+    catalog = {"albums": None,
+               "artists": None,
+               "tracks": None}
+
+    catalog["albums"] = mp.newMap(10000,
+                                   maptype=Ctype,
+                                   loadfactor=factor,
+                                   comparefunction=compareAlbums)
+
+    catalog["artists"] = mp.newMap(10000,
+                                   maptype=Ctype,
+                                   loadfactor=factor,
+                                   comparefunction=compareArtists)
+
+    catalog["tracks"] = mp.newMap(10000,
+                                   maptype=Ctype,
+                                   loadfactor=factor,
+                                   comparefunction=compareTracks)
+
+    return catalog
+
 # Funciones para agregar informacion al catalogo
 
 def addAlbum(catalog, album):
