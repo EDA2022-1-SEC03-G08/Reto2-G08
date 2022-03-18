@@ -34,6 +34,30 @@ se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
 
+#Inicializacion de catalogo
+
+def newController():
+    """
+    Se crea una instancia del controlador
+    """
+    control = controller.newController()
+    return control
+
+control = newController()
+
+#Funciones de requerimientos
+
+def loadData():
+    """
+    Función encargada de entregar la información de carga de los archivos.
+    """
+    albums, artists, tracks = controller.loadData(control)
+    return albums, artists, tracks
+
+
+
+    
+
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
@@ -48,7 +72,23 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+
         print("Cargando información de los archivos ....")
+    
+        # estas tres variables son numero de tipo int
+
+        albums, artists, tracks = loadData()
+
+        # este apartado se encarga de informar al usuario cuantos
+        # elementos fueron cargados e incluye la función de imprimir
+        # la información de cada lista.
+
+        print("Cargando información de los archivos .... \n")
+        print("===================="*2)
+        print(f"Cantidad de albumes cargados: {albums} \n")
+        print(f"Cantidad de artistas cargados: {artists} \n")
+        print(f"Cantidad de canciones cargadas: {tracks}")
+        print("===================="*2)
 
     elif int(inputs[0]) == 2:
         pass

@@ -39,7 +39,48 @@ los mismos.
 
 # Construccion de modelos
 
+def newCatalog():
+
+    catalog = {"albums": None,
+               "artists": None,
+               "tracks": None}
+    # No se neceistan listas encadenadas pues la información solo se va a
+    # consultar pero no a alterar. Por otro lado siempre se añade
+    # un album, artista o canción
+    # al final de la lista
+    # cosa que no tiene repercusiones de tiempo en un arreglo
+
+    #TODO: Cambiar el 1000 por el tamaño de datos reales. Para evitar rehash.
+    catalog["albums"] = mp.newMap(1000,
+                                   maptype='CHAINING',
+                                   loadfactor=4,
+                                   comparefunction=compareAlbums)
+
+    catalog["artists"] = mp.newMap(1000,
+                                   maptype='CHAINING',
+                                   loadfactor=4,
+                                   comparefunction=compareArtists)
+
+    catalog["tracks"] = mp.newMap(1000,
+                                   maptype='CHAINING',
+                                   loadfactor=4,
+                                   comparefunction=compareTracks)
+
+    return catalog
+
 # Funciones para agregar informacion al catalogo
+
+def addAlbum(catalog, album):
+    mp.put(catalog['albums'], album['id'], album)
+
+
+def addArtist(catalog, artistdic):
+    mp.put(catalog['artists'], artistdic['id'], artistdic)
+
+
+def addTrack(catalog, track):
+    mp.put(catalog['tracks'], track['id'], track)
+
 
 # Funciones para creacion de datos
 
@@ -47,4 +88,57 @@ los mismos.
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
+def compareAlbums(album1, album2):
+    """
+    Compara dos ids de dos albumes
+    """
+    identry = me.getKey(album2)
+    if (album1 == identry):
+        return 0
+    elif album1 > identry:
+        return 1
+    else:
+        return -1
+
+
+def compareArtists(artist1, artist2):
+    """
+    Compara dos ids de dos artistas
+    """
+    identry = me.getKey(artist2)
+    if (artist1 == identry):
+        return 0
+    elif artist1 > identry:
+        return 1
+    else:
+        return -1
+
+
+def compareTracks(track1, track2):
+    """
+    Compara dos ids de dos tracks
+    """
+    identry = me.getKey(track2)
+    if (track1 == identry):
+        return 0
+    elif track1 > identry:
+        return 1
+    else:
+        return -1
+
+
+
 # Funciones de ordenamiento
+
+# FUnciones de inidcadores de tamaño
+
+def albumSize(catalog):
+    return mp.size(catalog['albums'])
+
+
+def artistSize(catalog):
+    return mp.size(catalog['artists'])
+
+
+def trackSize(catalog):
+    return mp.size(catalog['tracks'])
