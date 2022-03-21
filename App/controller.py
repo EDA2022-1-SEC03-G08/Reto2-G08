@@ -26,6 +26,8 @@ import config as cf
 import model
 import csv
 
+csv.field_size_limit(2147483647)
+
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
@@ -84,7 +86,7 @@ def loadDataTest(control):
 
 
 def loadAlbums(catalog):
-    albumsfile = cf.data_dir + 'spotify-albums-utf8-small.csv'
+    albumsfile = cf.data_dir + 'spotify-albums-utf8-large.csv'
     input_file_al = csv.DictReader(open(albumsfile, encoding='utf-8'))
     for album in input_file_al:
         model.addAlbum(catalog, album)
@@ -92,7 +94,7 @@ def loadAlbums(catalog):
 
 
 def loadArtist(catalog):
-    artistsfile = cf.data_dir + 'spotify-artists-utf8-small.csv'
+    artistsfile = cf.data_dir + 'spotify-artists-utf8-large.csv'
     input_file_ar = csv.DictReader(open(artistsfile, encoding='utf-8'))
     for artist in input_file_ar:
         model.addArtist(catalog, artist)
@@ -100,7 +102,7 @@ def loadArtist(catalog):
 
 
 def loadTracks(catalog):
-    tracksfile = cf.data_dir + 'spotify-tracks-utf8-small.csv'
+    tracksfile = cf.data_dir + 'spotify-tracks-utf8-large.csv'
     input_file_tr = csv.DictReader(open(tracksfile, encoding='utf-8'))
     for track in input_file_tr:
         model.addTrack(catalog, track)
